@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - SCT</title>
+    <link rel="icon" href="~/Kolbi.ico" />
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/sweetalert/css")
+
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Content/bootstrap/bootstrap-datetimepicker.js"></script>
+    <script src="~/Content/bootstrap/bootstrap-datetimepicker.min.js"></script>
+
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Sistema de Control de Terminales", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (User.IsInRole("Administrador"))
+                        {
+                            <li class=" dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Perfiles
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                    <li>
+                                        @Html.ActionLink("Usuarios", "Register", "Account", routeValues: null,
+                                        htmlAttributes: new { id = "registerLink" })
+                                    </li>
+                                    <li>@Html.ActionLink("Roles", "Index", "Roles")</li>
+                                </ul>
+                            </li>
+
+                            <li class=" dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Terminales
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+
+                                    <li>@Html.ActionLink("Marcas", "Index", "Marcas")</li>
+                                    <li>@Html.ActionLink("Modelos", "Index", "Modeloes")</li>
+                                </ul>
+                            </li>
+
+
+                            <li>@Html.ActionLink("Forma de Pago", "Index", "FormaPagoes")</li>
+                            <li>@Html.ActionLink("Tipo de Tramite", "Index", "TipoTramites")</li>
+                            <li>@Html.ActionLink("Tipo de Anotación", "Index", "TipoAnotacions")</li>
+                            <li>@Html.ActionLink("Bitacora", "Index", "Bitacoras")</li>
+                        }
+                    }
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (User.IsInRole("Supervisor"))
+                        {
+                            <li>@Html.ActionLink("Solicitud", "Index", "Solicituds")</li>
+                            <li>@Html.ActionLink("Consultas", "ConsultaImeiSupervisor", "Consultas")</li>
+                            <li class=" dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Anotaciones
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                    <li role="presentation"><a role="menuitem" href="#">@Html.ActionLink("Listado", "Index", "Anotacions")</a></li>
+                                    <li role="presentation"><a role="menuitem" href="#">@Html.ActionLink("Buscar", "ConsultaAnotacionSupervisor", "Anotacions")</a></li>
+                                </ul>
+                            </li>
+                            <li>@Html.ActionLink("Gráficos", "VentasFuncionario", "Graficos")</li>
+                        }
+                    }
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (User.IsInRole("Frontal"))
+                        {
+                            <li>@Html.ActionLink("Solicitud", "IndexFrontal", "Solicituds")</li>
+                            <li>@Html.ActionLink("Consultas", "ConsultaImei", "Consultas")</li>
+                            <li class=" dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Anotaciones
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                    <li role="presentation"><a role="menuitem" href="#">@Html.ActionLink("Listado", "IndexFrontalAnotacion", "Anotacions")</a></li>
+                                    <li role="presentation"><a role="menuitem" href="#">@Html.ActionLink("Buscar", "ConsultaAnotacionFrontal", "Anotacions")</a></li>
+                                </ul>
+                            </li>
+                        }
+                    }
+
+                </ul>
+
+
+
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>
+                &copy; Región Metropolitana Oeste - Sistema de Control de Terminales V 1.0
+            </p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/sweetalert/js")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

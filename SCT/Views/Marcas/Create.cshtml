@@ -1,0 +1,58 @@
+﻿@model SCT.Models.Marca
+
+@{
+    ViewBag.Title = "Agregar Marca";
+}
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+<h2>Agregar Marca</h2>
+<script type="text/javascript">
+    @if (TempData["Message"] != null)
+      {
+      <text>
+            $(window).on('load', function () {
+                $(document).ready(function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "@TempData["Message"]",
+                        confirmButtonText: "Entendido",
+                        confirmButtonColor: '#A02383',
+                    })
+                });
+            });
+        </text>
+    }
+</script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.nombreMarca, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nombreMarca, new { htmlAttributes = new { @class = "form-control valid", data_val = "true", data_val_required = "El campo marca es obligatorio", data_val_length = "Longitud maxima 50 caracteres", data_val_length_max = "50" } })
+                @Html.ValidationMessageFor(model => model.nombreMarca, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Agregar" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Regresar", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

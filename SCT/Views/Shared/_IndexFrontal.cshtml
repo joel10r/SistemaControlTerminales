@@ -1,0 +1,96 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model IPagedList<SCT.Models.Solicitud>
+
+<p>
+    @Html.ActionLink("Solicitar", "CrearSolicitudFrontal")
+</p>
+<table class="table table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().imei)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().serie)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().imeiSustituido)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nombreUsuario)
+            </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.First().datosCliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().cedulaCliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().pedido)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().telefono)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().FormaPago.nombreFormaPago)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Modelo.nombreModelo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().TipoTramite.nombreTipoTramite)
+        </th>
+        <th>Acción</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.imei)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.serie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.imeiSustituido)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.fecha)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombreUsuario)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.datosCliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cedulaCliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.pedido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FormaPago.nombreFormaPago)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Modelo.nombreModelo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoTramite.nombreTipoTramite)
+            </td>
+            <td>
+                @Html.ActionLink(" ", "EditarSolicitudFrontal", new { id = item.idOrden }, htmlAttributes: new { @class = "glyphicon glyphicon-edit btn btn-success", title = "Editar Solicitud" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

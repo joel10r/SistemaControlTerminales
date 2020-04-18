@@ -1,0 +1,48 @@
+﻿@model SCT.Models.TipoAnotacion
+
+@{
+    ViewBag.Title = "Eliminar Anotación";
+}
+
+<h2>Eliminar Anotación</h2>
+<script type="text/javascript">
+    @if (TempData["Message"] != null)
+      {
+      <text>
+            $(window).on('load', function () {
+                $(document).ready(function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "@TempData["Message"]",
+                        confirmButtonText: "Entendido",
+                        confirmButtonColor: '#A02383',
+                    })
+                });
+            });
+        </text>
+    }
+</script>
+
+<div>
+  
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nombreTipoAnotacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombreTipoAnotacion)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-default" /> |
+            @Html.ActionLink("Regresar", "Index")
+        </div>
+    }
+</div>

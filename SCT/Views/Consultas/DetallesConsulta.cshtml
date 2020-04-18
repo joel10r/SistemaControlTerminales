@@ -1,0 +1,124 @@
+﻿@model SCT.Models.Solicitud
+
+@{
+    ViewBag.Title = "Detalles Solicitud";
+}
+
+<h2>Detalles Solicitud</h2>
+
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.imei)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.imei)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.serie)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.serie)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.imeiSustituido)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.imeiSustituido)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fecha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nombreUsuario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombreUsuario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.datosCliente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.datosCliente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cedulaCliente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cedulaCliente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pedido)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pedido)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.telefono)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.telefono)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FormaPago.nombreFormaPago)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FormaPago.nombreFormaPago)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Modelo.nombreModelo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Modelo.nombreModelo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoTramite.nombreTipoTramite)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoTramite.nombreTipoTramite)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @if (User.IsInRole("Supervisor"))
+    {
+        @Html.ActionLink("Editar | ", "EditConsultaSupervisor", new { id = Model.idOrden }) 
+        
+        @Html.ActionLink("Regresar", "ConsultaImeiSupervisor");
+
+    }
+    @if (User.IsInRole("Frontal"))
+    {
+        @Html.ActionLink("Editar | ", "EditConsultaFrontal", new { id = Model.idOrden }) 
+        @Html.ActionLink("Regresar", "ConsultaImei");
+    }
+</p>

@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SCT_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Anotacion">
+    <Key>
+      <PropertyRef Name="idAnotacion" />
+    </Key>
+    <Property Name="idAnotacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombreUsuario" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="datosCliente" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="observacion" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="imei" Type="Int64" Nullable="false" />
+    <Property Name="idTipoAnotacion" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="TipoAnotacion" Relationship="Self.FKIdTipoAnotacion" FromRole="Anotacion" ToRole="TipoAnotacion" />
+  </EntityType>
+  <EntityType Name="Bitacora">
+    <Key>
+      <PropertyRef Name="idBitacora" />
+    </Key>
+    <Property Name="idBitacora" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="usuario" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="accion" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="FormaPago">
+    <Key>
+      <PropertyRef Name="idFormaPago" />
+    </Key>
+    <Property Name="idFormaPago" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombreFormaPago" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Solicitud" Relationship="Self.FKIdFormaPago" FromRole="FormaPago" ToRole="Solicitud" />
+  </EntityType>
+  <EntityType Name="Marca">
+    <Key>
+      <PropertyRef Name="idMarca" />
+    </Key>
+    <Property Name="idMarca" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombreMarca" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Modelo" Relationship="Self.FKIdMarca" FromRole="Marca" ToRole="Modelo" />
+  </EntityType>
+  <EntityType Name="Modelo">
+    <Key>
+      <PropertyRef Name="idModelo" />
+    </Key>
+    <Property Name="idModelo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombreModelo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="idMarca" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Marca" Relationship="Self.FKIdMarca" FromRole="Modelo" ToRole="Marca" />
+    <NavigationProperty Name="Solicitud" Relationship="Self.FKIdModelo" FromRole="Modelo" ToRole="Solicitud" />
+  </EntityType>
+  <EntityType Name="Solicitud">
+    <Key>
+      <PropertyRef Name="idOrden" />
+    </Key>
+    <Property Name="idOrden" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="imei" Type="Int64" />
+    <Property Name="serie" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="imeiSustituido" Type="Int64" />
+    <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="nombreUsuario" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="datosCliente" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="cedulaCliente" Type="String" MaxLength="13" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="pedido" Type="String" MaxLength="13" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="telefono" Type="Int32" Nullable="false" />
+    <Property Name="idModelo" Type="Int32" Nullable="false" />
+    <Property Name="idFormaPago" Type="Int32" Nullable="false" />
+    <Property Name="idTipoTramite" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="FormaPago" Relationship="Self.FKIdFormaPago" FromRole="Solicitud" ToRole="FormaPago" />
+    <NavigationProperty Name="Modelo" Relationship="Self.FKIdModelo" FromRole="Solicitud" ToRole="Modelo" />
+    <NavigationProperty Name="TipoTramite" Relationship="Self.FKIdTipoTramite" FromRole="Solicitud" ToRole="TipoTramite" />
+  </EntityType>
+  <EntityType Name="TipoAnotacion">
+    <Key>
+      <PropertyRef Name="idTipoAnotacion" />
+    </Key>
+    <Property Name="idTipoAnotacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombreTipoAnotacion" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Anotacion" Relationship="Self.FKIdTipoAnotacion" FromRole="TipoAnotacion" ToRole="Anotacion" />
+  </EntityType>
+  <EntityType Name="TipoTramite">
+    <Key>
+      <PropertyRef Name="idTipoTramite" />
+    </Key>
+    <Property Name="idTipoTramite" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombreTipoTramite" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Solicitud" Relationship="Self.FKIdTipoTramite" FromRole="TipoTramite" ToRole="Solicitud" />
+  </EntityType>
+  <Association Name="FKIdTipoAnotacion">
+    <End Role="TipoAnotacion" Type="Self.TipoAnotacion" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Anotacion" Type="Self.Anotacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoAnotacion">
+        <PropertyRef Name="idTipoAnotacion" />
+      </Principal>
+      <Dependent Role="Anotacion">
+        <PropertyRef Name="idTipoAnotacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FKIdFormaPago">
+    <End Role="FormaPago" Type="Self.FormaPago" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Solicitud" Type="Self.Solicitud" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FormaPago">
+        <PropertyRef Name="idFormaPago" />
+      </Principal>
+      <Dependent Role="Solicitud">
+        <PropertyRef Name="idFormaPago" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FKIdMarca">
+    <End Role="Marca" Type="Self.Marca" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Modelo" Type="Self.Modelo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Marca">
+        <PropertyRef Name="idMarca" />
+      </Principal>
+      <Dependent Role="Modelo">
+        <PropertyRef Name="idMarca" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FKIdModelo">
+    <End Role="Modelo" Type="Self.Modelo" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Solicitud" Type="Self.Solicitud" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Modelo">
+        <PropertyRef Name="idModelo" />
+      </Principal>
+      <Dependent Role="Solicitud">
+        <PropertyRef Name="idModelo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FKIdTipoTramite">
+    <End Role="TipoTramite" Type="Self.TipoTramite" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Solicitud" Type="Self.Solicitud" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoTramite">
+        <PropertyRef Name="idTipoTramite" />
+      </Principal>
+      <Dependent Role="Solicitud">
+        <PropertyRef Name="idTipoTramite" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SCT_DBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Anotacion" EntityType="Self.Anotacion" />
+    <EntitySet Name="Bitacora" EntityType="Self.Bitacora" />
+    <EntitySet Name="FormaPago" EntityType="Self.FormaPago" />
+    <EntitySet Name="Marca" EntityType="Self.Marca" />
+    <EntitySet Name="Modelo" EntityType="Self.Modelo" />
+    <EntitySet Name="Solicitud" EntityType="Self.Solicitud" />
+    <EntitySet Name="TipoAnotacion" EntityType="Self.TipoAnotacion" />
+    <EntitySet Name="TipoTramite" EntityType="Self.TipoTramite" />
+    <AssociationSet Name="FKIdTipoAnotacion" Association="Self.FKIdTipoAnotacion">
+      <End Role="TipoAnotacion" EntitySet="TipoAnotacion" />
+      <End Role="Anotacion" EntitySet="Anotacion" />
+    </AssociationSet>
+    <AssociationSet Name="FKIdFormaPago" Association="Self.FKIdFormaPago">
+      <End Role="FormaPago" EntitySet="FormaPago" />
+      <End Role="Solicitud" EntitySet="Solicitud" />
+    </AssociationSet>
+    <AssociationSet Name="FKIdMarca" Association="Self.FKIdMarca">
+      <End Role="Marca" EntitySet="Marca" />
+      <End Role="Modelo" EntitySet="Modelo" />
+    </AssociationSet>
+    <AssociationSet Name="FKIdModelo" Association="Self.FKIdModelo">
+      <End Role="Modelo" EntitySet="Modelo" />
+      <End Role="Solicitud" EntitySet="Solicitud" />
+    </AssociationSet>
+    <AssociationSet Name="FKIdTipoTramite" Association="Self.FKIdTipoTramite">
+      <End Role="TipoTramite" EntitySet="TipoTramite" />
+      <End Role="Solicitud" EntitySet="Solicitud" />
+    </AssociationSet>
+    <EntitySet Name="AspNetRoles" EntityType="SCT_DBModel.AspNetRoles" />
+    <EntitySet Name="AspNetUserClaims" EntityType="SCT_DBModel.AspNetUserClaims" />
+    <EntitySet Name="AspNetUserLogins" EntityType="SCT_DBModel.AspNetUserLogins" />
+    <EntitySet Name="AspNetUsers" EntityType="SCT_DBModel.AspNetUsers" />
+    <EntitySet Name="Image" EntityType="SCT_DBModel.Image" />
+    <EntitySet Name="sysdiagrams" EntityType="SCT_DBModel.sysdiagrams" />
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="SCT_DBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="SCT_DBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserRoles" Association="SCT_DBModel.AspNetUserRoles">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <FunctionImport Name="spVentasPorFuncionario" ReturnType="Collection(SCT_DBModel.spVentasPorFuncionario_Result)">
+      <Parameter Name="fechaInicial" Mode="In" Type="DateTime" />
+      <Parameter Name="fechaFinal" Mode="In" Type="DateTime" />
+    </FunctionImport>
+  </EntityContainer>
+  <EntityType Name="AspNetRoles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="SCT_DBModel.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaims">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="SCT_DBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogins">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="SCT_DBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="NombreUsuario" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ApellidoUsuario" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUserClaims" Relationship="SCT_DBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+    <NavigationProperty Name="AspNetUserLogins" Relationship="SCT_DBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+    <NavigationProperty Name="AspNetRoles" Relationship="SCT_DBModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+  </EntityType>
+  <EntityType Name="Image">
+    <Key>
+      <PropertyRef Name="imageID" />
+    </Key>
+    <Property Name="imageID" Type="Int32" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="imagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Type="SCT_DBModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="SCT_DBModel.AspNetUserClaims" Role="AspNetUserClaims" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Type="SCT_DBModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="SCT_DBModel.AspNetUserLogins" Role="AspNetUserLogins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AspNetUserRoles">
+    <End Type="SCT_DBModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
+    <End Type="SCT_DBModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
+  </Association>
+  <ComplexType Name="spVentasPorFuncionario_Result">
+    <Property Type="String" Name="nombreUsuario" Nullable="false" MaxLength="150" />
+    <Property Type="Int32" Name="Cantidad" Nullable="true" />
+  </ComplexType>
+</Schema>

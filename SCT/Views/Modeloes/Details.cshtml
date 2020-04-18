@@ -1,0 +1,34 @@
+﻿@model SCT.Models.Modelo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Modelo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nombreModelo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombreModelo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Marca.nombreMarca)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Marca.nombreMarca)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idModelo }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

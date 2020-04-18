@@ -1,0 +1,76 @@
+﻿@model SCT.Models.Solicitud
+
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script type="text/javascript">
+    @if (TempData["Message"] != null)
+      {
+      <text>
+            $(window).on('load', function () {
+                $(document).ready(function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "@TempData["Message"]",
+                        confirmButtonText: "Entendido",
+                        confirmButtonColor: '#A02383',
+                    })
+                });
+            });
+        </text>
+    }
+</script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.idOrden)
+        @Html.HiddenFor(model => model.fecha)
+        @Html.HiddenFor(model => model.nombreUsuario)
+        @Html.HiddenFor(model => model.datosCliente)
+        @Html.HiddenFor(model => model.cedulaCliente)
+        @Html.HiddenFor(model => model.pedido)
+        @Html.HiddenFor(model => model.idModelo)
+        @Html.HiddenFor(model => model.idFormaPago)
+        @Html.HiddenFor(model => model.idTipoTramite)
+        @Html.HiddenFor(model => model.telefono)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.imei, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.imei, new { htmlAttributes = new { @class = "form-control valid", data_val = "true", data_val_required = "El campo IMEI es obligatorio", data_val_length = "Longitud requerida de 15 caracteres", data_val_length_max = "15", data_val_length_min = "15" } })
+                @Html.ValidationMessageFor(model => model.imei, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.serie, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.serie, new { htmlAttributes = new { @class = "form-control valid", data_val = "true", data_val_required = "El campo serie es obligatorio" } })
+                @Html.ValidationMessageFor(model => model.serie, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.imeiSustituido, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.imeiSustituido, new { htmlAttributes = new { @class = "form-control valid", data_val_length = "Longitud requerida de 15 caracteres", data_val_length_max = "15", data_val_length_min = "0" } })
+                @Html.ValidationMessageFor(model => model.imeiSustituido, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Guardar" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Regresar", "Index")
+</div>

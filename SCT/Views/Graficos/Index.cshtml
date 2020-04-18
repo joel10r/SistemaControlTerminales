@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<script src="~/Scripts/Chart/highcharts.js"></script>
+<script src="~/Scripts/Chart/exporting.src.js"></script>
+
+
+
+
+<script src="~/Scripts/Chart/highcharts.js"></script>
+<script src="~/Scripts/Chart/exporting.src.js"></script>
+
+
+<figure class="highcharts-figure">
+    <div id="container"></div>
+
+</figure>
+
+
+<script>
+
+    $(document).ready(function () {
+        $.getJSON("/Graficos/ObtenerVentasFrontales", function (data) {
+
+            Highcharts.chart('container', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'Ventas Funcionarios'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                accessibility: {
+                    point: {
+                        valueSuffix: '%'
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Funcionarios',
+                    colorByPoint: true,
+                    data: [{
+                        name: 'Heyni Suarez',
+                        y: data.Hesuar,
+                    }, {
+                        name: 'Joel Ruiz',
+                        y: data.Joruiz5
+                    }, {
+                        name: 'Fernada Salazar',
+                        y: data.Masala
+                    }, {
+                        name: 'Pedro Morales',
+                        y: data.Pemora
+                    }, {
+                        name: 'Angie Quiroz',
+                        y: data.Anquir
+                    }, {
+                        name: 'Josseline Espinoza',
+                        y: data.Joespi
+                    }]
+
+                }]
+            });
+        });
+    });
+</script>
+
+
+
+
+
+

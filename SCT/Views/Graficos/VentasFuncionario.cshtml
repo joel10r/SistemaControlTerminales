@@ -1,0 +1,141 @@
+﻿
+@{
+    ViewBag.Title = "VentasFuncionario";
+}
+<h2>Ventas Por Funcionario</h2>
+
+<script src="~/Scripts/Chart/highcharts.js"></script>
+<script src="~/Scripts/Chart/exporting.src.js"></script>
+
+<figure class="highcharts-figure">
+
+    <div id="grafico"></div>
+
+</figure>
+
+@using (Html.BeginForm("Resultado", "Graficos", FormMethod.Post))
+{
+<div class="control" id="fechas">
+    <br />
+    @*<span>Fecha Inicial</span> @Html.TextBox("fechaInicial", " Fecha Inicial", null, htmlAttributes: new { @id = "fechaInicial" })*@
+    @*@Html.TextBox("fechaInicial", null, htmlAttributes: new { placeholder = "Fecha Inicial", @class = "form-control " })*@
+    <div class="container" >
+        <div class="row">
+            <div class='col-sm-6'>
+                <input title='Fecha Inicial' class="form-control" id='fechaInicial' htmlAttributes: new { placeholder = "Fecha Inicial" />
+            </div>
+            <script type="text/javascript">
+                $(function () {
+                    $('#fechaInicial').datetimepicker({ format: 'DD-MM-YYYY' });
+                });
+            </script>
+        </div>
+    </div>
+    <br />
+    @*<span>Fecha Final</span>@Html.TextBox("fechaFinal")*@
+    @*@Html.TextBox("fechaFinal", null, htmlAttributes: new { placeholder = "Fecha Final", @class = "form-control " })*@
+    <div class="container">
+        <div class="row">
+            <div class='col-sm-6'>
+                <input title='Fecha Final' type='text' class="form-control" id='fechaFinal' htmlAttributes: new { placeholder = "Fecha Final" />
+            </div>
+            <script type="text/javascript">
+                $(function () {
+                    $('#fechaFinal').datetimepicker({ format: 'DD-MM-YYYY' });
+                });
+            </script>
+        </div>
+    </div>
+    <br />
+    <div class="container">
+        <input id="btnBuscar" type="button" value="Buscar" class="btn btn-primary" />
+    </div>
+</div>
+
+}
+
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+            $("#btnBuscar").click("click", function () {
+                ListaPubli();
+            });
+        });
+
+        function ListaPubli() {
+            var fechaInicial = $("#fechaInicial").val();
+            var fechaFinal = $("#fechaFinal").val();
+            var JSONObject = {
+                fechaInicial: fechaInicial,
+                fechaFinal: fechaFinal
+            };
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: "/Graficos/Resultado",
+                data: JSON.stringify(JSONObject),
+                dataType: "json",
+                async: false,
+                cache: false,
+                success: function (Result) {
+                    //alert(Result)
+                    var series = new Array();
+                    for (var i in Result) {
+                        var serie = new Array(Result[i].Usuario, Result[i].Cantidad);
+                        series.push(serie);
+                    }
+
+                    DibujaGrafico(series);
+
+                },
+                error: function (Result) {
+                    alert(error);
+                }
+
+            });
+
+        }
+
+        function DibujaGrafico(serie) {
+            Highcharts.chart('grafico', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'Ventas Por Funcionarios'
+                },
+
+                tooltip: {
+                    pointFormat: '{serie.Usuario}: <b>{point.percentage:.1f}%</b>)'
+                },
+                accessibility: {
+                    point: {
+                        valueSuffix: '%'
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.Usuario}</b>: {point.y}',
+                            style: {
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                            }
+                        }
+                    }
+                },
+                series: [{
+
+                    data: serie
+                    
+                }]
+            });
+        }
+    </script>
+    }

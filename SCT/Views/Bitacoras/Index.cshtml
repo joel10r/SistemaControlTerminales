@@ -1,0 +1,56 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model IPagedList<SCT.Models.Bitacora>
+
+@{
+    ViewBag.Title = "Bitácora";
+}
+
+ <h2>Registro Bitácora</h2>
+
+ <p>
+     <a class="btn btn-success" href="@Url.Action("ReporteGeneral")">Generar Reporte</a>
+ </p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().idBitacora)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().usuario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().accion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().fecha)
+        </th>
+
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.idBitacora)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.usuario)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.accion)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.fecha)
+    </td>
+
+
+</tr>
+    }
+
+</table>
+
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

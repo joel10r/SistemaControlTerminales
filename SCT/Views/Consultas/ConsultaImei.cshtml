@@ -1,0 +1,157 @@
+﻿@model IEnumerable<SCT.Models.Solicitud>
+
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+
+
+@{
+    ViewBag.Title = "Consulta Solicitud";
+}
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<h2>Consulta Solicitud</h2>
+<script type="text/javascript">
+    @if (TempData["Message"] != null)
+      {
+       if (TempData["Message"].ToString() == "IMEI no registra una salida")
+        {
+          <text>
+            $(window).on('load', function () {
+                $(document).ready(function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "@TempData["Message"]",
+                        confirmButtonText: "Entendido",
+                        confirmButtonColor: '#A02383',
+                    })
+                });
+            });
+        </text>
+        }
+
+        if (TempData["Message"].ToString() == "No puede editar este IMEI")
+        {
+            <text>
+            $(window).on('load', function () {
+                $(document).ready(function () {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: "@TempData["Message"]",
+                        confirmButtonText: "Entendido",
+                        confirmButtonColor: '#A02383',
+                    })
+                });
+            });
+        </text>
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    function validateData() {
+        if ($("#imei").val() == "") {
+            Swal.fire({
+                icon: 'warning',
+                title: "IMEI es un campo requerido",
+                confirmButtonText: "Entendido",
+                confirmButtonColor: '#A02383',
+            });
+            return false;
+        }
+       if (isNaN($("#imei").val())) {
+           Swal.fire({
+               icon: 'warning',
+               title: "IMEI es un campo numerico",
+               confirmButtonText: "Entendido",
+               confirmButtonColor: '#A02383',
+           });
+           return false;
+        }
+        else {
+            return true;
+        }
+    }
+</script>
+
+
+@using (Html.BeginForm("ConsultaImei", "Consultas", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+
+    @Html.TextBox("imei", null, htmlAttributes: new { placeholder = "IMEI", @class = "form-control " })
+
+    <br />
+    <input type="submit" onclick="return validateData();" value="Buscar" class="btn btn-primary" />
+    <br />
+    <br />
+
+}
+
+<table class="table table-hover">
+    <tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.imei)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.serie)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.imeiSustituido)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Modelo.nombreModelo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pedido)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FormaPago.nombreFormaPago)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TipoTramite.nombreTipoTramite)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fecha)
+        </th>
+        <th>Acción</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.imei)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.serie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.imeiSustituido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Modelo.nombreModelo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.pedido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FormaPago.nombreFormaPago)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoTramite.nombreTipoTramite)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fecha)
+            </td>
+            <td>
+                @Html.ActionLink(" ", "EditConsultaFrontal", new { id = item.idOrden }, htmlAttributes: new { @class = "glyphicon glyphicon-edit btn btn-success", title = "Editar Solicitud" }) |
+                @Html.ActionLink(" ", "DetallesConsulta", new { id = item.idOrden }, htmlAttributes: new { @class = "glyphicon glyphicon-info-sign btn btn-success", title = "Detalles" })
+            </td>
+        </tr>
+    }
+
+</table>

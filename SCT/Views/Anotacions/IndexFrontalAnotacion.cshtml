@@ -1,0 +1,62 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model IPagedList<SCT.Models.Anotacion>
+
+@{
+    ViewBag.Title = "Anotación";
+}
+
+<h2>Anotaciones</h2>
+
+<p>
+    @Html.ActionLink("Agregar Anotación", "CrearAnotacionFrontal")
+</p>
+<table class="table table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().nombreUsuario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().datosCliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().observacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().imei)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().TipoAnotacion.nombreTipoAnotacion)
+        </th>
+        <th>Acción</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.nombreUsuario)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.datosCliente)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.observacion)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.imei)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.TipoAnotacion.nombreTipoAnotacion)
+    </td>
+    <td>
+        @Html.ActionLink(" ", "Edit", new { id = item.idAnotacion }, htmlAttributes: new { @class = "glyphicon glyphicon-edit btn btn-success", title = "Editar Anotación" })
+        @*@Html.ActionLink("Detalles", "Details", new { id=item.idAnotacion }) |*@
+        @*@Html.ActionLink("Delete", "Delete", new { id=item.idAnotacion })*@
+    </td>
+</tr>
+    }
+
+</table>
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

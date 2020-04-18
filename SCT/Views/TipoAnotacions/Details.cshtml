@@ -1,0 +1,26 @@
+﻿@model SCT.Models.TipoAnotacion
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TipoAnotacion</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nombreTipoAnotacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombreTipoAnotacion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idTipoAnotacion }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

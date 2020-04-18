@@ -1,0 +1,56 @@
+﻿@model SCT.Models.Modelo
+
+@{
+    ViewBag.Title = "Eliminar Modelo";
+}
+
+<h2>Eliminar Modelo</h2>
+<script type="text/javascript">
+    @if (TempData["Message"] != null)
+      {
+      <text>
+            $(window).on('load', function () {
+                $(document).ready(function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "@TempData["Message"]",
+                        confirmButtonText: "Entendido",
+                        confirmButtonColor: '#A02383',
+                    })
+                });
+            });
+        </text>
+    }
+</script>
+
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nombreModelo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombreModelo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Marca.nombreMarca)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Marca.nombreMarca)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-default" /> |
+            @Html.ActionLink("Regresar", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,65 @@
+﻿@model SCT.Models.Anotacion
+
+@{
+    ViewBag.Title = "Detalles Anotación";
+}
+
+<h2>Detalles de Anotación</h2>
+
+<div>
+     <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nombreUsuario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombreUsuario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.datosCliente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.datosCliente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.observacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.observacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.imei)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.imei)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoAnotacion.nombreTipoAnotacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoAnotacion.nombreTipoAnotacion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @if (User.IsInRole("Supervisor"))
+    {
+     @Html.ActionLink("Regresar", "ConsultaAnotacionSupervisor");
+    }
+    @if (User.IsInRole("Frontal"))
+    {
+     @Html.ActionLink("Editar ", "Edit", new { id = Model.idAnotacion }) 
+     @Html.ActionLink("Regresar", "ConsultaAnotacionFrontal");
+     }
+
+</p>

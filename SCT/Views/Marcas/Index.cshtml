@@ -1,0 +1,36 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model IPagedList<SCT.Models.Marca>
+
+@{
+    ViewBag.Title = "Marcas";
+}
+
+<h2>Marcas Registradas</h2>
+
+<p>
+    @Html.ActionLink("Agregar Marca", "Create")
+</p>
+<table class="table table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().nombreMarca)
+        </th>
+        <th>Acción</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombreMarca)
+            </td>
+            <td>
+                @Html.ActionLink(" ", "Edit", new { id = item.idMarca }, htmlAttributes: new { @class = "glyphicon glyphicon-edit btn btn-success", title = "Editar Marca" }) |
+                @Html.ActionLink(" ", "Delete", new { id = item.idMarca }, htmlAttributes: new { @class = "glyphicon glyphicon-remove btn btn-success", title = "Eliminar Marca" })
+            </td>
+        </tr>
+    }
+
+</table>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

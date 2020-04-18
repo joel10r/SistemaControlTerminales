@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ace996ce893545ea8890a245acd00180" Name="Diagram1" ZoomLevel="192">
+        <EntityTypeShape EntityType="SCT_DBModel.Anotacion" Width="1.5" PointX="8" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SCT_DBModel.Bitacora" Width="1.5" PointX="7.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="SCT_DBModel.FormaPago" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SCT_DBModel.Marca" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SCT_DBModel.Modelo" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SCT_DBModel.Solicitud" Width="1.5" PointX="5.25" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SCT_DBModel.TipoAnotacion" Width="1.5" PointX="5.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SCT_DBModel.TipoTramite" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="SCT_DBModel.FKIdTipoAnotacion" ManuallyRouted="false" />
+        <AssociationConnector Association="SCT_DBModel.FKIdFormaPago" ManuallyRouted="false" />
+        <AssociationConnector Association="SCT_DBModel.FKIdMarca" ManuallyRouted="false" />
+        <AssociationConnector Association="SCT_DBModel.FKIdModelo" ManuallyRouted="false" />
+        <AssociationConnector Association="SCT_DBModel.FKIdTipoTramite" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SCT_DBModel.AspNetRoles" Width="1.5" PointX="10.75" PointY="2.5" />
+        <EntityTypeShape EntityType="SCT_DBModel.AspNetUserClaims" Width="1.5" PointX="15.25" PointY="1" />
+        <EntityTypeShape EntityType="SCT_DBModel.AspNetUserLogins" Width="1.5" PointX="15.25" PointY="3.75" />
+        <EntityTypeShape EntityType="SCT_DBModel.AspNetUsers" Width="1.5" PointX="13" PointY="1.125" />
+        <EntityTypeShape EntityType="SCT_DBModel.Image" Width="1.5" PointX="7.75" PointY="4.75" />
+        <EntityTypeShape EntityType="SCT_DBModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="8.75" />
+        <AssociationConnector Association="SCT_DBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="SCT_DBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="SCT_DBModel.AspNetUserRoles" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
